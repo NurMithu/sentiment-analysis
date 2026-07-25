@@ -10,7 +10,7 @@ End-to-end sentiment classification case study — five modeling approaches comp
 
 ## Live Demo
 
-🔗 **[Try the live dashboard](#)** — type your own review and see a live sentiment prediction, or upload your own labeled dataset. *(Add your deployed Streamlit URL here after deployment — see "Deploy" below.)*
+🔗 **[Try the live dashboard](https://sentiment-analysis-ytcvdn7yhftrexed7yoczj.streamlit.app/)** 
 
 ## Overview
 
@@ -118,12 +118,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-### Deploy for Free
-1. Push this repo to GitHub (public).
-2. Go to [share.streamlit.io](https://share.streamlit.io) → sign in with GitHub → **New app**.
-3. Select this repo, branch `main`, file path `app.py`.
-4. Click **Deploy** — you'll get a public link in a few minutes.
-5. Add that link to the "Live Demo" section above.
 
 ## Tech Stack
 
