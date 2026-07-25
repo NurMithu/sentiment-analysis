@@ -10,8 +10,7 @@ End-to-end sentiment classification case study — five modeling approaches comp
 
 ## Live Demo
 
-🔗 **[Try the live dashboard](#)** — type your own review and see a live sentiment prediction, or upload your own labeled dataset. *(Add your deployed Streamlit URL here after deployment — see "Deploy" below.)*
-
+🔗 **[Try the live dashboard](https://sentiment-analysis-ytcvdn7yhftrexed7yoczj.streamlit.app/)** 
 ## Overview
 
 Businesses with any public-facing customer channel generate a constant stream of feedback they rarely have time to systematically read. This project builds a pipeline that automatically classifies sentiment, identifies *why* customers are unhappy (not just that they are), and benchmarks brands against each other — the kind of analysis a business would otherwise pay a social-listening tool a monthly subscription for.
@@ -93,13 +92,6 @@ Public **Twitter US Airline Sentiment** dataset — 14,640 tweets about six majo
 
 **Top words driving sentiment:** negative — *hours, worst, hold, delayed, rude, cancelled*; positive — *great, thank, awesome, love, amazing* — exactly the kind of concrete, quotable detail a client wants in a report.
 
-## Live Dashboard Features
-
-- **Try It Live** — type any review or tweet and get an instant sentiment prediction with confidence scores, compared against the rule-based VADER score. Low-confidence predictions are explicitly flagged rather than shown as falsely confident.
-- **Overview** — sentiment distribution, top complaint reasons, confusion matrix
-- **Brand Comparison** — sentiment breakdown by airline/brand, auto-flags best and worst performers
-- **What Drives Sentiment** — the specific words most associated with each sentiment class
-- **Bring your own data** — upload your own labeled review/tweet CSV (`text` + `airline_sentiment` columns) and the model retrains on your data instantly
 
 ### A note on negation handling
 
@@ -122,12 +114,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-### Deploy for Free
-1. Push this repo to GitHub (public).
-2. Go to [share.streamlit.io](https://share.streamlit.io) → sign in with GitHub → **New app**.
-3. Select this repo, branch `main`, file path `app.py`.
-4. Click **Deploy** — you'll get a public link in a few minutes.
-5. Add that link to the "Live Demo" section above.
 
 ## Tech Stack
 
