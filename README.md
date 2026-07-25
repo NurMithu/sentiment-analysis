@@ -10,7 +10,7 @@ End-to-end sentiment classification case study — five modeling approaches comp
 
 ## Live Demo
 
-🔗 **[Try the live dashboard](https://sentiment-analysis-ytcvdn7yhftrexed7yoczj.streamlit.app/)** 
+🔗 **[Try the live dashboard](#)** — type your own review and see a live sentiment prediction, or upload your own labeled dataset. *(Add your deployed Streamlit URL here after deployment — see "Deploy" below.)*
 
 ## Overview
 
@@ -58,7 +58,7 @@ Public **Twitter US Airline Sentiment** dataset — 14,640 tweets about six majo
 | 1 | Business Understanding |
 | 2 | Data Understanding |
 | 3 | Data Quality Assessment |
-| 4 | Text Cleaning |
+| 4 | Text Cleaning — including negation-aware tokenization |
 | 5 | Business EDA — sentiment split, by-airline breakdown, complaint reasons |
 | 6 | VADER — rule-based baseline (zero training) |
 | 7 | Train/Test Split & TF-IDF Vectorization |
@@ -95,11 +95,15 @@ Public **Twitter US Airline Sentiment** dataset — 14,640 tweets about six majo
 
 ## Live Dashboard Features
 
-- **Try It Live** — type any review or tweet and get an instant sentiment prediction with confidence scores, compared against the rule-based VADER score
+- **Try It Live** — type any review or tweet and get an instant sentiment prediction with confidence scores, compared against the rule-based VADER score. Low-confidence predictions are explicitly flagged rather than shown as falsely confident.
 - **Overview** — sentiment distribution, top complaint reasons, confusion matrix
 - **Brand Comparison** — sentiment breakdown by airline/brand, auto-flags best and worst performers
 - **What Drives Sentiment** — the specific words most associated with each sentiment class
 - **Bring your own data** — upload your own labeled review/tweet CSV (`text` + `airline_sentiment` columns) and the model retrains on your data instantly
+
+### A note on negation handling
+
+An early version of the text-cleaning step silently destroyed negation — `"wouldn't"` became two meaningless fragments (`"wouldn"`, `"t"`) after stripping punctuation, so the model sometimes couldn't distinguish `"not good"` from `"good"`. This is now fixed: contractions are expanded first (`"wouldn't"` → `"would not"`), then a negation word is merged with the word right after it into a single token (`"not good"` → `"not_good"`), letting the model learn negated phrases as their own feature. This measurably fixes common patterns like *"not bad"* and *"no issues"* — but rare negated phrases that appear only a handful of times in the training data (e.g. *"wouldn't recommend"*) still don't get enough signal to be learned reliably with this small a training set. That's an honest limitation of TF-IDF on ~14K examples, not a bug — a larger dataset or a sequence model (LSTM/transformer) would close this gap further.
 
 ## How to Run
 
@@ -118,6 +122,12 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+### Deploy for Free
+1. Push this repo to GitHub (public).
+2. Go to [share.streamlit.io](https://share.streamlit.io) → sign in with GitHub → **New app**.
+3. Select this repo, branch `main`, file path `app.py`.
+4. Click **Deploy** — you'll get a public link in a few minutes.
+5. Add that link to the "Live Demo" section above.
 
 ## Tech Stack
 

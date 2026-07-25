@@ -15,31 +15,31 @@
     },
     {
       "model": "Naive Bayes (TF-IDF)",
-      "Accuracy": 0.7308,
-      "Macro_F1": 0.5792,
-      "Macro_Precision": 0.7676,
-      "Macro_Recall": 0.5402
+      "Accuracy": 0.7366,
+      "Macro_F1": 0.592,
+      "Macro_Precision": 0.7655,
+      "Macro_Recall": 0.5524
     },
     {
       "model": "Logistic Regression (TF-IDF, class-weighted)",
       "Accuracy": 0.7549,
-      "Macro_F1": 0.7139,
-      "Macro_Precision": 0.6987,
-      "Macro_Recall": 0.7395
+      "Macro_F1": 0.713,
+      "Macro_Precision": 0.6974,
+      "Macro_Recall": 0.7387
     },
     {
       "model": "Random Forest (TF-IDF, class-weighted)",
-      "Accuracy": 0.6773,
-      "Macro_F1": 0.6483,
-      "Macro_Precision": 0.6481,
-      "Macro_Recall": 0.6813
+      "Accuracy": 0.6729,
+      "Macro_F1": 0.6476,
+      "Macro_Precision": 0.652,
+      "Macro_Recall": 0.6809
     },
     {
       "model": "XGBoost (TF-IDF)",
-      "Accuracy": 0.7499,
-      "Macro_F1": 0.6473,
-      "Macro_Precision": 0.7168,
-      "Macro_Recall": 0.6241
+      "Accuracy": 0.7527,
+      "Macro_F1": 0.6498,
+      "Macro_Precision": 0.7193,
+      "Macro_Recall": 0.6291
     }
   ],
   "best_model": "Logistic Regression (TF-IDF, class-weighted)",
@@ -50,32 +50,32 @@
     "hrs",
     "hour",
     "delayed",
-    "told",
-    "luggage",
     "rude",
+    "told",
     "cancelled",
-    "fail",
     "bag",
+    "luggage",
     "disappointed",
+    "fail",
     "customers",
-    "days"
+    "not_even"
   ],
   "top_positive_words": [
-    "great",
     "thank",
     "thanks",
+    "great",
     "awesome",
-    "love",
     "amazing",
-    "kudos",
+    "love",
     "best",
+    "kudos",
     "thx",
-    "appreciate",
-    "excellent",
     "good",
-    "excited",
+    "excellent",
+    "appreciate",
     "happy",
-    "wonderful"
+    "wonderful",
+    "excited"
   ],
   "worst_airline": "US Airways",
   "worst_airline_negative_pct": 77.8,

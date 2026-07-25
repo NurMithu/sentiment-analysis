@@ -38,8 +38,20 @@ def clean_text(text: str) -> str:
     text = str(text).lower()
     text = re.sub(r"@\w+", "", text)
     text = re.sub(r"http\S+|www\S+", "", text)
+    # Expand contractions BEFORE stripping punctuation, so negation survives
+    # (a naive strip turns "wouldn't" into meaningless "wouldn t" fragments).
+    contractions = {
+        "won't": "will not", "can't": "can not", "n't": " not",
+        "'re": " are", "'s": " is", "'d": " would", "'ll": " will",
+        "'ve": " have", "'m": " am",
+    }
+    for k, v in contractions.items():
+        text = text.replace(k, v)
     text = re.sub(r"[^a-z\s]", " ", text)
     text = re.sub(r"\s+", " ", text).strip()
+    # Merge negation word with the next word into one token: "not good" ->
+    # "not_good", so the model can learn negated phrases as their own feature.
+    text = re.sub(r"\b(not|no|never)\s+(\w+)", r"\1_\2", text)
     return text
 
 
@@ -122,6 +134,10 @@ k1.metric("Total Reviews Analyzed", f"{len(df):,}")
 k2.metric("% Negative", f"{sentiment_counts.get('negative', 0) / len(df):.1%}")
 k3.metric("Model Accuracy", f"{metrics['Accuracy']:.1%}")
 k4.metric("Model Macro F1", f"{metrics['Macro_F1']:.3f}")
+st.caption(
+    "Trained on airline/travel-style customer feedback — predictions are most reliable "
+    "on similar text. See the 'Try It Live' tab for a confidence-flagged live demo."
+)
 
 st.markdown("---")
 
@@ -212,6 +228,13 @@ with tab_words:
 # ---------------------------------------------------------------------------
 with tab_try:
     st.markdown("#### Type a review or tweet and see the live prediction")
+    st.caption(
+        "⚠️ This model is trained on airline/travel-style feedback and works best on "
+        "similar text. Known hard cases: sarcasm, and rare negated phrases the model "
+        "hasn't seen much of in training (e.g. very uncommon 'not ___' combinations) — "
+        "see the notebook's Limitations section for why. A low-confidence flag below "
+        "will warn you when a prediction is genuinely uncertain rather than confidently wrong."
+    )
     user_text = st.text_area(
         "Enter text", value="The flight was delayed for 3 hours and nobody told us why. Terrible service.",
         height=100,
@@ -221,9 +244,16 @@ with tab_try:
         vec = vectorizer.transform([cleaned])
         pred = model.predict(vec)[0]
         proba = dict(zip(model.classes_, model.predict_proba(vec)[0]))
+        top_confidence = max(proba.values())
 
         color = COLOR_MAP.get(pred, "#000000")
         st.markdown(f"### Prediction: <span style='color:{color}'>**{pred.upper()}**</span>", unsafe_allow_html=True)
+
+        if top_confidence < 0.50:
+            st.warning(
+                f"⚠️ Low confidence ({top_confidence:.0%}) — this is a genuinely ambiguous "
+                "case for the model, not a confident answer. Treat this prediction with caution."
+            )
 
         proba_df = pd.DataFrame({"Sentiment": list(proba.keys()), "Probability": list(proba.values())})
         fig = px.bar(proba_df, x="Sentiment", y="Probability", color="Sentiment",

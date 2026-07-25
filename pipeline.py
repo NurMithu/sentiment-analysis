@@ -59,8 +59,22 @@ def clean_text(text: str) -> str:
     text = str(text).lower()
     text = re.sub(r"@\w+", "", text)
     text = re.sub(r"http\S+|www\S+", "", text)
+    # Expand contractions BEFORE stripping punctuation, so negation survives.
+    # The old approach ("wouldn't" -> "wouldn t") silently destroyed negation,
+    # which is a well-known failure mode for bag-of-words sentiment models.
+    contractions = {
+        "won't": "will not", "can't": "can not", "n't": " not",
+        "'re": " are", "'s": " is", "'d": " would", "'ll": " will",
+        "'ve": " have", "'m": " am",
+    }
+    for k, v in contractions.items():
+        text = text.replace(k, v)
     text = re.sub(r"[^a-z\s]", " ", text)
     text = re.sub(r"\s+", " ", text).strip()
+    # Merge a negation word with the word right after it into one token:
+    # "not good" -> "not_good". This lets the model learn negated phrases as
+    # their own feature instead of seeing "good" alone and predicting positive.
+    text = re.sub(r"\b(not|no|never)\s+(\w+)", r"\1_\2", text)
     return text
 
 
