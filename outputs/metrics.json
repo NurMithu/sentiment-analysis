@@ -1,0 +1,86 @@
+{
+  "n_tweets": 14427,
+  "sentiment_distribution_pct": {
+    "negative": 62.9,
+    "neutral": 21.2,
+    "positive": 15.9
+  },
+  "results": [
+    {
+      "model": "VADER (rule-based, no training)",
+      "Accuracy": 0.547,
+      "Macro_F1": 0.5129,
+      "Macro_Precision": 0.5416,
+      "Macro_Recall": 0.6036
+    },
+    {
+      "model": "Naive Bayes (TF-IDF)",
+      "Accuracy": 0.7308,
+      "Macro_F1": 0.5792,
+      "Macro_Precision": 0.7676,
+      "Macro_Recall": 0.5402
+    },
+    {
+      "model": "Logistic Regression (TF-IDF, class-weighted)",
+      "Accuracy": 0.7549,
+      "Macro_F1": 0.7139,
+      "Macro_Precision": 0.6987,
+      "Macro_Recall": 0.7395
+    },
+    {
+      "model": "Random Forest (TF-IDF, class-weighted)",
+      "Accuracy": 0.6773,
+      "Macro_F1": 0.6483,
+      "Macro_Precision": 0.6481,
+      "Macro_Recall": 0.6813
+    },
+    {
+      "model": "XGBoost (TF-IDF)",
+      "Accuracy": 0.7499,
+      "Macro_F1": 0.6473,
+      "Macro_Precision": 0.7168,
+      "Macro_Recall": 0.6241
+    }
+  ],
+  "best_model": "Logistic Regression (TF-IDF, class-weighted)",
+  "top_negative_words": [
+    "hours",
+    "worst",
+    "hold",
+    "hrs",
+    "hour",
+    "delayed",
+    "told",
+    "luggage",
+    "rude",
+    "cancelled",
+    "fail",
+    "bag",
+    "disappointed",
+    "customers",
+    "days"
+  ],
+  "top_positive_words": [
+    "great",
+    "thank",
+    "thanks",
+    "awesome",
+    "love",
+    "amazing",
+    "kudos",
+    "best",
+    "thx",
+    "appreciate",
+    "excellent",
+    "good",
+    "excited",
+    "happy",
+    "wonderful"
+  ],
+  "worst_airline": "US Airways",
+  "worst_airline_negative_pct": 77.8,
+  "best_airline": "Virgin America",
+  "best_airline_negative_pct": 36.0,
+  "top_complaint_reason": "Customer Service Issue",
+  "top_complaint_pct_of_negative": 31.8
+}
